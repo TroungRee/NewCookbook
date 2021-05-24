@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<title>My Cookbook</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" text="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<link rel="icon" type="image/png" href="/public/images/cookbooklogo.png">
+<style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
+    .w3-bar-block .w3-bar-item {padding:20px}
+</style>
+<body>
+
+<!-- Sidebar (hidden by default) -->
+<nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+  <a href="javascript:void(0)" onclick="closeMenu()" class="w3-bar-item w3-button">Close Menu</a>
+  <a href="/home" onclick="closeMenu()" class="w3-bar-item w3-button">Home</a>
+  <a href="/myRecipes" onclick="closeMenu()" class="w3-bar-item w3-button">My Recipes</a>
+  <a href="/add" onclick="closeMenu()" class="w3-bar-item w3-button">Add Recipe</a>
+</nav>
+
+<!-- Top menu -->
+<div class="w3-top">
+  <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+    <div class="w3-button w3-padding-16 w3-left" onclick="openMenu()">☰</div>
+    <div class="w3-right"> <img src="/public/images/cookbooklogo.png" style="width:auto;height:68px"> </div>
+    <div class="w3-center w3-padding-16">Book of the Cooking</div>
+  </div>
+</div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
+
+  <!-- First Photo Grid-->
+  <div class="w3-row-padding w3-padding-16 w3-center" id="food" >
+    <a href="/show" onclick="showRecipe('Tuna Casserole')"><div class="w3-quarter" id="home1">
+      <img src="public/images/Tuna Casserole.jpg" alt="Tuna Casserole" style="width:100%;border:30px solid #fff">
+      <h3>Tuna Casserole</h3>
+    </div></a>
+    <a href="/show" onclick="showRecipe('Easy Bake Fish')"><div class="w3-quarter" id="home2">
+      <img src="public/images/Easy Bake Fish.jpg" alt="Fish" style="width:100%; border:30px solid #fff">
+      <h3>Easy Bake Fish</h3>
+    </div></a>
+    <a href="/show" onclick="showRecipe('Crispy Baked Chicken')"><div class="w3-quarter" id="home3">
+      <img src="public/images/Crispy Baked Chicken.jpg" alt="Chicken" style="width:100%; border:30px solid #fff">
+      <h3>Crispy Baked Chicken</h3>
+    </div></a>
+    <a href="/show" onclick="showRecipe('Peanut Butter Banana Smoothie')"><div class="w3-quarter" id="home4">
+      <img src="public/images/Peanut Butter Banana Smoothie.jpg" alt="Peanut Butter Banana Smoothie" style="width:100%; border:30px solid #fff">
+      <h3>Peanut Butter Banana Smoothie</h3>
+    </div></a>
+  </div>
+
+<script src="../js/ourRecipes.js"></script>
+
+
+<script type="text/javascript">
+    // Script to open and close sidebar
+    function openMenu() {
+      $("#mySidebar").css("display","block");
+    }
+
+    function closeMenu() {
+      $("#mySidebar").css("display","none");
+    }
+
+    function showRecipe(dishName){
+        $.post("/updateServerRecipe",{dish:dishName},null);
+    }
+
+</script>
+
+</body>
+</html>
