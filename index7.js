@@ -15,7 +15,7 @@ app.use(routes);  //new
 //req is info sending to server from client.
 //res is info sending to client from server.
 
-
+  console.log("Hi");
 app.listen(4007, function () {
   console.log('Example app listening on port 4007!');
 });
