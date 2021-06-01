@@ -1,6 +1,8 @@
 var path = require("path");
 var express = require("express");
 var passport = require("passport");
+var formidable = require('formidable');
+var mv = require('mv');
 
 var Info = require("./models/Info");
 var User = require("./models/user");
@@ -11,7 +13,7 @@ const Recipe = require('./Recipe');
 
 router.get("/",function(req,res){
     console.log("get root");
-    let thePath = path.resolve(__dirname,"public/views/home.html");
+    let thePath = path.resolve(__dirname,"public/html/home.html");
     res.sendFile(thePath);
 });
 
@@ -35,14 +37,14 @@ router.get("/signup", function(req, res) {
     console.log("get signup");
     initIdent();
 
-  	let thePath = path.resolve(__dirname,"public/views/signup.html");
+  	let thePath = path.resolve(__dirname,"public/html/signup.html");
   	res.sendFile(thePath);
 });
 
 router.get("/login", function(req, res) {
     console.log("get login");
 
-  	let thePath = path.resolve(__dirname,"public/views/login.html");
+  	let thePath = path.resolve(__dirname,"public/html/login.html");
   	res.sendFile(thePath);
 });
 
@@ -50,16 +52,16 @@ router.get("/session", function(req, res) {
     console.log("get session");
     if (req.isAuthenticated()) {
         if (req.user.username == "admin") {
-            let thePath = path.resolve(__dirname,"public/views/adminsession.html");
+            let thePath = path.resolve(__dirname,"public/html/adminsession.html");
             res.sendFile(thePath);
         }
         else {
-    	     let thePath = path.resolve(__dirname,"public/views/session.html");
+    	     let thePath = path.resolve(__dirname,"public/html/session.html");
     	     res.sendFile(thePath);
         }
     }
     else {
-        let thePath = path.resolve(__dirname,"public/views/login.html");
+        let thePath = path.resolve(__dirname,"public/html/login.html");
         res.sendFile(thePath);
     }
 });
@@ -96,6 +98,24 @@ function initAdmin(req,res) {
     });
 }
 
+
+var ident = 0;
+function initIdent(){
+  if (ident == 0)
+  {
+    User.find({},function(err,user) {
+      if (!err) {
+        let objs = [];
+        for (let i=0;i<user.length;i++) {
+          if (ident < user[i].ident)
+            ident = user[i].ident;
+        }
+      }
+    });
+  }
+}
+
+
 router.get("/userInfo",function(req,res){
     console.log("top userInfo");
     if (req.isAuthenticated()) {
@@ -117,7 +137,6 @@ router.get("/logout", function(req, res) {
     }
 });
 
-const Recipe = require('./Recipe');
 const myDatabase = require('./myDatabase');
 let db = new myDatabase();
 let serverDb = new myDatabase();
