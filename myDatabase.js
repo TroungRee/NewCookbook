@@ -1,52 +1,73 @@
 
+
+var express = require("express");
+var mongoose = require("mongoose");
+var Info = require("./models/Info");
 const Recipe = require('./Recipe');
 
 let myDatabase = function() {
-	this.recipes = [];
 }
 
-let recipeIndex = 0;
-let index = 0;
-myDatabase.prototype.displayRecipes = function() {
-	for (let i=0;i<this.recipes.length;i++) {
-		console.log(this.recipes[i]);
-	}
+
+
+myDatabase.prototype.postRecipe = function(recipe,res) {
+    let obj = {ident:recipe.ident,dish:recipe.dish, ingredients: recipe.ingredients,directions:recipe.directions
+      ,category:recipe.category,image:recipe.image
+    };
+    Info.create(recipe,function(error,info) {
+        if (error) {
+            return res.json({retVal:false});
+        }
+        return res.json({retVal:true});
+    });
 }
 
-myDatabase.prototype.postRecipe = function(recipe) {
-  for (let i=0;i<this.recipes.length;i++) {
-    if (this.recipes[i] && this.recipes[i].dish == recipe.dish) {
-      return false;
+myDatabase.prototype.getRecipe = function(ident,res) {
+  Info.find({ident:ident},function(error,info) {
+      if (error) {
+          return res.json({retVal:null});
+      }
+      else if (info == null) {
+          return res.json({retVal:null});
+      }
+
+      if (info.length == 1)
+      {
+        return res.json({ retVal: new Recipe(ident,info[0].dish,info[0].ingredients,info[0].directions,info[0].category,info[0].image       ) });
+      }
+      else
+          return res.json({retVal:null});
+
+   });
+
+}
+
+
+myDatabase.prototype.putRecipe = function(recipe,res) {
+  Info.findOneAndUpdate({ident:recipe.ident},{dish:recipe.dish,ingredients:recipe.ingredients,directions:recipe.directions
+,category:recipe.category,image:recipe.image},function(error,oldRecipe) {
+    if (error) {
+      return res.json({retVal:false});
     }
-  }
+    else if (oldRecipe == null) {
+      return res.json({retVal:false});
+    }
+    return res.json({retVal:true});
+  });
 
-	if(recipe.index >= 4){
-			this.recipes[recipeIndex++] = new Recipe(recipe.dish,recipe.ingredients,recipe.directions,recipe.category,recipe.image,recipe.index);
-			return true;
-	}
-
-//	this.recipes[recipeIndex++] = recipe;
-	this.recipes[recipeIndex++] = new Recipe(recipe.dish,recipe.ingredients,recipe.directions,recipe.category,recipe.image,index);
-	index++;
-	return true;
 }
 
-myDatabase.prototype.getRecipeByName = function(dish) {
-  for (let i=0;i<this.recipes.length;i++) {
-    if (this.recipes[i] && dish == this.recipes[i].dish) {
-      return(new Recipe(this.recipes[i].dish,this.recipes[i].ingredients,this.recipes[i].directions,this.recipes[i].category,this.recipes[i].image,this.recipes[i].index));
-		}
-  }
-	return null;
+
+myDatabase.prototype.deleteRecipe = function(ident,res) {
+    Info.remove({ident:ident},function(error,removed) {
+        if (error) {
+            return res.json({retVal:false});
+        }
+        if (removed.result.n == 0)
+          return res.json({retVal:false});
+        return res.json({retVal:true});
+    });
 }
 
-myDatabase.prototype.getRecipeByIndex = function(index) {
-  for (let i=0;i<this.recipes.length;i++) {
-    if (this.recipes[i] && index == this.recipes[i].index) {
-      return(new Recipe(this.recipes[i].dish,this.recipes[i].ingredients,this.recipes[i].directions,this.recipes[i].category,this.recipes[i].image,this.recipes[i].index));
-		}
-  }
-	return null;
-}
 
 module.exports = myDatabase;
