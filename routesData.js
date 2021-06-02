@@ -1,7 +1,8 @@
 let path = require("path");
 let express = require("express");
 var passport = require("passport");
-
+var formidable = require('formidable');
+var mv = require('mv');
 //added below for mongo
 //var mongoose = require("mongoose");
 var Info = require("./models/Info");
@@ -13,7 +14,11 @@ var User = require("./models/user");
 //https://scotch.io/tutorials/learn-to-use-the-new-router-in-expressjs-4
 let router = express.Router();
 
-
+//added below for mongo
+const myDatabase = require('./myDatabase');
+//added above for mongo
+let db = new myDatabase();
+const Recipe = require('./Recipe');
 
 
 router.use(function(req, res, next) {
@@ -26,125 +31,86 @@ router.use(function(req, res, next) {
 //request is info sending to server from client.
 //response is info sending to client from server.
 
-//router.get("/",function(req,res){
-//	res.sendFile(path.resolve(__dirname + "/public/views/index.html"));  //changed
-//});
 
-//added below for mongo
-const myDatabase = require('./myDatabase');
-//added above for mongo
-
-let db = new myDatabase();
-const Recipe = require('./Recipe');
 
 
 router.get('/read', function(req, res){
 	if (req.isAuthenticated()) {
-		return(db.getStudent(req.user.ident,res));
+		return(db.getRecipe(req.user.ident,res));
 	}
 	else
 		res.json(null);
 });
 
-
-router.get('/readAdmin', function(req, res){
-	if (req.isAuthenticated()) {
-		if (req.user.username == "admin")
-		{
-
-//added below for mongo
-
-console.log("readAdmin " + req.query.ident);
-		return(db.getStudent(req.query.ident,res));
-		}
-		else
-			res.json(null);
-	}
-	else
-		res.json(null);
-});
-
-
-
-
-
+var ident = 0;
 router.post('/create', function(req, res){
 
 	if (req.isAuthenticated()) {
+  		if (req.body.name == "") {
+  			res.json(null);
+  			return;
+  		}
 
-		if (req.body.name == "") {
-			res.json(null);
-			return;
-		}
+  		if (req.user.username == "admin") {
+  			res.json(null);
+  			return;
+  		}
 
-		if (req.user.username == "admin") {
-			res.json(null);
-			return;
-		}
+  		console.log(req.body.dish);
 
-		console.log(req.body.grade);
-		console.log(req.body.volleyball);
+      //added below for mongo
+    	let obj = new Recipe(ident,req.user.username,req.body.dish,req.body.ingredients,
+    		    req.body.directions,req.body.category,req.body.image);
 
-//added below for mongo
-	let obj = new Student(req.user.ident,req.user.username,req.body.grade,req.body.volleyball,
-		req.body.basketball,req.body.soccer);
-		return(db.postStudent(obj,res));
+      ident ++;
+  		return(db.postRecipe(obj,res));
 
-	}
-	else
-		res.json(null);
+  	}
+  	else
+  		res.json(null);
 });
-
-
-
-router.put('/updateAdmin', function(req, res){
-
-	if (req.isAuthenticated()) {
-
-
-console.log(req.body.ident);
-console.log(req.body.name);
-console.log(req.body.grade);
-
-
-		if (req.body.name == "") {
-			res.json(null);
-			return;
-		}
-//added below for mongo
-	let obj = new Student(req.body.ident,req.body.name,req.body.grade,req.body.volleyball,req.body.basketball,req.body.soccer);
-		return(db.putStudent(obj,res));
-	}
-	else
-		res.json(null);
-});
-
 
 
 router.put('/update', function(req, res){
 
 	if (req.isAuthenticated()) {
-
 		if (req.body.name == "") {
-			res.json(null);
-			return;
+  			res.json(null);
+  			return;
 		}
-//added below for mongo
-	let obj = new Student(req.user.ident,req.user.username,req.body.grade,req.body.volleyball,req.body.basketball,req.body.soccer);
-		return(db.putStudent(obj,res));
-
+     //added below for mongo
+	   let obj = new Recipe(req.user.ident,req.user.username,req.body.dish,req.body.ingredients,
+       req.body.directions,req.body.category,req.body.image);
+		 return(db.putRecipe(obj,res));
 	}
 	else
 		res.json(null);
 });
 
 
-//router.delete('/delete/:identifier', function(req, res){
-////added below for mongo
-//	return( db.deleteStudent(req.params.identifier,res));
-////added above for mongo
-//});
+router.post("/updateRecipePage",function(req,res){
+      res.json(recipeInfo);
+});
 
 
+let retRecipe = new Recipe();
+router.post("/updateMyRecipes",function(req,res){
+      retRecipe = db.getRecipe(req.body.ident);
+      if(retRecipe == null) return;
+      retRecipe.image = '/public/images/' + retRecipe.image;
+      res.json(retRecipe);
+});
+
+
+router.post('/fileupload', function(req, res){
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+	      var oldpath = files.filetoupload.path;
+	      var newpath = __dirname + '/public/images/' + files.filetoupload.name;
+	      mv(oldpath, newpath, function (err) {
+		        if (err) throw err;
+        });
+    });
+});
 
 module.exports = router;

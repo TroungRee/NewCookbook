@@ -2,11 +2,11 @@
 function createClicked(){
 
     $.ajax({
-      url: "/clientCreate",
+      url: "/create",
       type: "POST",
       data: {dish:$("#dish").val(),ingredients:$("#ingredients").val(),
              directions:$("#directions").val(),category:$("#category").val(),
-             image:$("#imageStuff").val().substring(12), index:0},
+             image:$("#imageStuff").val().substring(12)},
       dataType: "json"
     });
   return false;

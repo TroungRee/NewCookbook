@@ -1,8 +1,7 @@
 var path = require("path");
 var express = require("express");
 var passport = require("passport");
-var formidable = require('formidable');
-var mv = require('mv');
+
 
 var Info = require("./models/Info");
 var User = require("./models/user");
@@ -10,10 +9,14 @@ var User = require("./models/user");
 var router = express.Router();
 const Recipe = require('./Recipe');
 
+const myDatabase = require('./myDatabase');
+//added above for mongo
+let db = new myDatabase();
+
 
 router.get("/",function(req,res){
     console.log("get root");
-    let thePath = path.resolve(__dirname,"public/html/home.html");
+    let thePath = path.resolve(__dirname,"public/html/login.html");
     res.sendFile(thePath);
 });
 
@@ -33,6 +36,38 @@ router.get("/show",function(req,res){
 		res.sendFile(__dirname + "/public/html/displayRecipe.html");
 });
 
+router.get("/successroot", function(req, res) {
+  console.log("get successroot");
+	res.json({redirect:"/"});
+});
+
+router.get("/failroot", function(req, res) {
+  console.log("get failroot");
+	res.json({redirect:"/login"});
+});
+
+router.get("/successsignup", function(req, res) {
+  console.log("get successsignup");
+  res.json({redirect:"/home"});
+});
+
+router.get("/failsignup", function(req, res) {
+  console.log("get failsignup");
+	res.json({redirect:"/login"});
+});
+
+router.get("/successlogin", function(req, res) {
+  console.log("get successlogin");
+  res.json({redirect:"/home"});
+});
+
+router.get("/faillogin", function(req, res) {
+  console.log("get faillogin");
+	res.json({redirect:"/login"});
+});
+
+
+
 router.get("/signup", function(req, res) {
     console.log("get signup");
     initIdent();
@@ -51,52 +86,14 @@ router.get("/login", function(req, res) {
 router.get("/session", function(req, res) {
     console.log("get session");
     if (req.isAuthenticated()) {
-        if (req.user.username == "admin") {
-            let thePath = path.resolve(__dirname,"public/html/adminsession.html");
-            res.sendFile(thePath);
-        }
-        else {
-    	     let thePath = path.resolve(__dirname,"public/html/session.html");
-    	     res.sendFile(thePath);
-        }
+  	     let thePath = path.resolve(__dirname,"public/html/session.html");
+  	     res.sendFile(thePath);
     }
     else {
         let thePath = path.resolve(__dirname,"public/html/login.html");
         res.sendFile(thePath);
     }
 });
-
-router.get("/adminInfo",function(req,res){
-    if (req.isAuthenticated()) {
-        if (req.user.username == "admin"){
-            initAdmin(req,res);
-        }
-        else
-            res.json(null);
-    }
-    else {
-        res.json(null);
-    }
-});
-
-function initAdmin(req,res) {
-    console.log("initAdmin");
-    console.log(req.user.ident);
-    console.log(req.user.username);
-
-    Info.find({},function(error,info) {
-        if (error) {
-          return res.json(null);
-        }
-        else {
-            let list = [];
-            for (let i=0;i<info.length;i++) {
-                list.push({ident:info[i].ident,name:info[i].name});
-            }
-            res.json ({ ident:req.user.ident,username: req.user.username,userList:list});
-        }
-    });
-}
 
 
 var ident = 0;
@@ -120,7 +117,7 @@ router.get("/userInfo",function(req,res){
     console.log("top userInfo");
     if (req.isAuthenticated()) {
         console.log("userInfo is auth");
-        db.getStudent(req.user.ident,res);
+        db.getRecipe(req.user.ident,res);
     }
     else {
         res.json(null);
@@ -137,9 +134,6 @@ router.get("/logout", function(req, res) {
     }
 });
 
-const myDatabase = require('./myDatabase');
-let db = new myDatabase();
-let serverDb = new myDatabase();
 var recipeInfo = {};
 
 
@@ -176,63 +170,6 @@ router.post("/login", passport.authenticate("login", {
   failureFlash: true
 }));
 
-//server
-router.post('/serverCreate', function(req, res){
-	if (req.body.dish == "") {
-		res.json({retVal:false});
-		return;
-	}
-	let obj = new Recipe(req.body.dish,req.body.ingredients,req.body.directions,req.body.category,req.body.image,req.body.index);
-	res.json({retVal:serverDb.postRecipe(obj)});
-});
-
-//client
-router.post('/clientCreate', function(req, res){
-	if (req.body.dish == "") {
-		res.json({retVal:false});
-		return;
-	}
-	let obj = new Recipe(req.body.dish,req.body.ingredients,req.body.directions,req.body.category,req.body.image,req.body.index);
-	res.json({retVal:db.postRecipe(obj)});
-});
-
-
-router.post("/updateServerRecipe",function(req,res){
-      recipeInfo = serverDb.getRecipeByName(req.body.dish);
-      recipeInfo.image = '/public/images/' + recipeInfo.image;
-});
-
-
-router.post("/updateClientRecipe",function(req,res){
-      recipeInfo = db.getRecipeByName(req.body.dish);
-      recipeInfo.image = '/public/images/' + recipeInfo.image;
-});
-
-router.post("/updateRecipePage",function(req,res){
-      res.json(recipeInfo);
-});
-
-
-let retRecipe = new Recipe();
-router.post("/updateMyRecipes",function(req,res){
-      retRecipe = db.getRecipeByIndex(req.body.index);
-      if(retRecipe == null) return;
-      retRecipe.image = '/public/images/' + retRecipe.image;
-      res.json(retRecipe);
-});
-
-
-
-router.post('/fileupload', function(req, res){
-    var form = new formidable.IncomingForm();
-    form.parse(req, function (err, fields, files) {
-	      var oldpath = files.filetoupload.path;
-	      var newpath = __dirname + '/public/images/' + files.filetoupload.name;
-	      mv(oldpath, newpath, function (err) {
-		        if (err) throw err;
-        });
-    });
-});
 
 
 module.exports = router;

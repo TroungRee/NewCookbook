@@ -12,8 +12,8 @@ let myDatabase = function() {
 
 myDatabase.prototype.postRecipe = function(recipe,res) {
     let obj = {ident:recipe.ident,dish:recipe.dish, ingredients: recipe.ingredients,directions:recipe.directions
-      ,category:recipe.category,image:recipe.image
-    };
+      ,category:recipe.category,image:recipe.image};
+    console.log(recipe);
     Info.create(recipe,function(error,info) {
         if (error) {
             return res.json({retVal:false});
@@ -31,9 +31,8 @@ myDatabase.prototype.getRecipe = function(ident,res) {
           return res.json({retVal:null});
       }
 
-      if (info.length == 1)
-      {
-        return res.json({ retVal: new Recipe(ident,info[0].dish,info[0].ingredients,info[0].directions,info[0].category,info[0].image       ) });
+      if (info.length == 1) {
+        return res.json({ retVal: new Recipe(ident,info[0].dish,info[0].ingredients,info[0].directions,info[0].category,info[0].image)});
       }
       else
           return res.json({retVal:null});
