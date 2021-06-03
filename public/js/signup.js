@@ -6,31 +6,10 @@ function userClicked(){
     }
     $.post("/signup",{username:$("#username").val(), password:$("#psw").val()},function(data) {
       console.log(data.redirect);
-      if (data.redirect == "/session" && $("#username").val() != "admin")
-      {
-        createClicked();
-      }
       window.location = data.redirect;
     });
 
 		return false;
-}
-
-function createClicked(){
-
-    $.ajax({
-      url: "/create",
-      type: "POST",
-      data: {grade:9,volleyball:false,basketball:false,soccer:false},
-      success: function(data){
-        if (!data.retVal)
-          alert("bad create");
-        else
-          alert("good create");
-        } ,
-      dataType: "json"
-    });
-  return false;
 }
 
 

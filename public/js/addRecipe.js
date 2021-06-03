@@ -2,7 +2,7 @@
 function createClicked(){
 
     $.ajax({
-      url: "/create",
+      url: "/createRecipe",
       type: "POST",
       data: {dish:$("#dish").val(),ingredients:$("#ingredients").val(),
              directions:$("#directions").val(),category:$("#category").val(),

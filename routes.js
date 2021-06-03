@@ -3,7 +3,6 @@ var express = require("express");
 var passport = require("passport");
 
 
-var Info = require("./models/Info");
 var User = require("./models/user");
 
 var router = express.Router();
@@ -98,8 +97,7 @@ router.get("/session", function(req, res) {
 
 var ident = 0;
 function initIdent(){
-  if (ident == 0)
-  {
+  if (ident == 0) {
     User.find({},function(err,user) {
       if (!err) {
         let objs = [];

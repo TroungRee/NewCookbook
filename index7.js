@@ -7,12 +7,9 @@ var passport = require("passport");
 var path = require("path");
 var session = require("express-session");
 
-
-var Info = require("./models/Info");   //maybe not needed.
-
 var setUpPassport = require("./setuppassport");
 var routes = require("./routes");
-var routesData = require("./routesData");    //added
+var routesRecipe = require("./routesRecipe");    //added
 
 var app = express();
 mongoose.connect("mongodb://localhost:27017/recipe");   //27017 seems to be the port number used by mongod
@@ -42,7 +39,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(routes);
-app.use(routesData);
+app.use(routesRecipe);
 
 app.listen(app.get("port"), function() {
   console.log("Server started on port " + app.get("port"));

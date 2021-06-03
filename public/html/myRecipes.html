@@ -71,9 +71,9 @@
           </div></a>
         </div>
 
+        <button type="button" name="button" onclick="printRecipe()"></button>
 
       <script type="text/javascript">
-            var index = 1;
             // Script to open and close sidebar
             function openMenu() {
               $("#mySidebar").css("display","block");
@@ -82,38 +82,20 @@
             function closeMenu() {
               $("#mySidebar").css("display","none");
             }
-            /*
+
             $(document).ready(function(){
-                for(let i=0;i<4;i++){
-                  $.post("/updateMyRecipes",{ident:1},function(data){
-                      $("#title"+i).text(data.dish);
-                      $("#link"+i).attr("onclick","showRecipe('"+data.dish+"')");
-                      $("#link"+i).attr("href","/show");
 
-                      if(i==0){
-                        image0.src = data.image;
-                        console.log("here0");
-                      }
-                      else if(i==1){
-                        image1.src = data.image;
-                        console.log("here1");
-                      }
-                      else if(i==2){
-                        image2.src = data.image;
-                        console.log("here2");
-                      }
-                      else if(i==3){
-                        image3.src = data.image;
-                        console.log("here3");
-                      }
-                  });
-                }
             });
-*/
 
-            //function showRecipe(dishName){
-              //  $.post("/updateClientRecipe",{dish:dishName},null);
-            //}
+            function showRecipe(dishName){
+                $.post("/updateClientRecipe",{dish:dishName},null);
+            }
+
+
+            function printRecipe(){
+                $.get
+            }
+
       </script>
 
   </body>
