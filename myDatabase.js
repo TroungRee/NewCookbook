@@ -21,8 +21,11 @@ myDatabase.prototype.postRecipe = function(recipe,res) {
 }
 
 myDatabase.prototype.getRecipe = function(ident,res) {
-  Recipe.find({ident:ident},function(error,info) {
-      console.log(retVal);
+  console.log(ident);
+  Recipe.findOne({ident:ident},function(error,info) {
+
+      console.log(info);
+
       if (error) {
           return res.json({retVal:null});
       }

@@ -71,7 +71,7 @@
           </div></a>
         </div>
 
-        <button type="button" name="button" onclick="printRecipe()"></button>
+        <button type="button" name="button" onclick="printRecipe()">CLICK ME</button>
 
       <script type="text/javascript">
             // Script to open and close sidebar
@@ -93,7 +93,7 @@
 
 
             function printRecipe(){
-                $.get
+                $.post("/getRecipe",{ident:1},null);
             }
 
       </script>

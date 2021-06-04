@@ -116,31 +116,65 @@ router.post('/createRecipe', function(req, res){
 		res.json({retVal:null});
 });
 
-
-router.get("/getRecipe",function(req,res){
-      console.log("top listRecipe");
-  if (req.isAuthenticated()) {
-      console.log("userInfo is auth");
-      db.getRecipes(res);
-	}
-	else {
-		res.json({retVal:null});
-	}
-});
-
-
 router.post("/updateRecipePage",function(req,res){
       res.json(retRecipe);
 });
 
 
+function findRecipe(ident){
+
+    return new Promise(function(resolve,reject) {
+        console.log(ident);
+        Recipe.findOne({ident:ident},function(error,info){
+            console.log("Recipe.findOne");
+            console.log("IN PROMISE" + info);
+            /*
+            if (typeof info === "undefined") {
+                console.log("UNDEFINED");
+                reject(err);
+            }
+            else if (info == null) {
+                console.log("NULL");
+                reject(err);
+            }
+            else {
+              */
+
+                retRecipe = info;
+                console.log("IN PROMISE RETURN" + retRecipe);
+                resolve(retRecipe);
+            //}
+        });
+     });
+}
+
+
 let retRecipe = new Recipe();
-router.post("/updateMyRecipes",function(req,res){
-      retRecipe = db.getRecipe(req.body.ident);
-      if(retRecipe == null)
-          return;
-      retRecipe.image = '/public/images/' + retRecipe.image;
-      res.json(retRecipe);
+router.post("/getRecipe",function(req,res){
+      console.log(req.body.ident);
+      Recipe.findOne({ident:req.body.ident},function(error,info){
+          retRecipe = info;
+          console.log("IN RETURN" + retRecipe);
+
+      });
+      return(retRecipe);
+
+/*
+      var Prom2 = findRecipe(req.body.ident);
+      Prom2.then(
+    	  	function(result) {
+              retRecipe = result;
+              if(retRecipe == null)
+                  res.json({retVal:null});
+              retRecipe.image = '/public/images/' + retRecipe.image;
+              return(retRecipe);
+    	    },
+    	    function(err) {
+      	      console.log("error");
+              res.json({retVal:null});
+    	    }
+  	  );
+      */
 });
 
 

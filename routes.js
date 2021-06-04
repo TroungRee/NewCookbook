@@ -111,17 +111,6 @@ function initIdent(){
 }
 
 
-router.get("/userInfo",function(req,res){
-    console.log("top userInfo");
-    if (req.isAuthenticated()) {
-        console.log("userInfo is auth");
-        db.getRecipe(req.user.ident,res);
-    }
-    else {
-        res.json(null);
-    }
-});
-
 router.get("/logout", function(req, res) {
     if (req.isAuthenticated()) {
         req.logout();
