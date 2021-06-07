@@ -1,6 +1,7 @@
 
 
 var mongoose = require("mongoose");
+mongoose.set("debug",true);
 
 //Schema is a decription (the definition) of the mongoDB document.
 var recipeSchema = mongoose.Schema({

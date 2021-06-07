@@ -93,7 +93,10 @@
 
 
             function printRecipe(){
-                $.post("/getRecipe",{ident:1},null);
+                var test = {};
+                $.post("/getRecipe",{ident:1},function(data){
+                  console.log(data);
+                });
             }
 
       </script>

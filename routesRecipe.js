@@ -121,60 +121,40 @@ router.post("/updateRecipePage",function(req,res){
 });
 
 
-function findRecipe(ident){
-
-    return new Promise(function(resolve,reject) {
-        console.log(ident);
-        Recipe.findOne({ident:ident},function(error,info){
-            console.log("Recipe.findOne");
-            console.log("IN PROMISE" + info);
-            /*
-            if (typeof info === "undefined") {
-                console.log("UNDEFINED");
-                reject(err);
-            }
-            else if (info == null) {
-                console.log("NULL");
-                reject(err);
-            }
-            else {
-              */
-
-                retRecipe = info;
-                console.log("IN PROMISE RETURN" + retRecipe);
-                resolve(retRecipe);
-            //}
-        });
-     });
+function findRecipe(identity){
+  return new Promise(function(resolve,reject) {
+      console.log(identity);
+      console.log(typeof identity);
+      RecipeModel.findOne({ident:identity},function(err,info){
+          if (err) {
+              reject(err);
+          }
+          else {
+              resolve(info);
+          }
+      });
+   });
 }
-
 
 let retRecipe = new Recipe();
 router.post("/getRecipe",function(req,res){
       console.log(req.body.ident);
-      Recipe.findOne({ident:req.body.ident},function(error,info){
-          retRecipe = info;
-          console.log("IN RETURN" + retRecipe);
-
-      });
-      return(retRecipe);
-
-/*
+      console.log(typeof req.body.ident);
       var Prom2 = findRecipe(req.body.ident);
       Prom2.then(
     	  	function(result) {
-              retRecipe = result;
+              retRecipe = result._doc;
               if(retRecipe == null)
                   res.json({retVal:null});
               retRecipe.image = '/public/images/' + retRecipe.image;
-              return(retRecipe);
+              console.log(retRecipe);
+              res.json(retRecipe);
     	    },
     	    function(err) {
       	      console.log("error");
               res.json({retVal:null});
     	    }
   	  );
-      */
 });
 
 
