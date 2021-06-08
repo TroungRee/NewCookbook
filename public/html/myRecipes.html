@@ -82,24 +82,10 @@
             function closeMenu() {
               $("#mySidebar").css("display","none");
             }
-
-            $(document).ready(function(){
-
-            });
-
-            function showRecipe(dishName){
-                $.post("/updateClientRecipe",{dish:dishName},null);
-            }
-
-
-            function printRecipe(){
-                var test = {};
-                $.post("/getRecipe",{ident:1},function(data){
-                  console.log(data);
-                });
-            }
-
       </script>
+
+      <script src="js/myRecipes.js"></script>
+
 
   </body>
 </html>

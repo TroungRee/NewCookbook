@@ -121,11 +121,9 @@ router.post("/updateRecipePage",function(req,res){
 });
 
 
-function findRecipe(identity){
+function findRecipeById(ident){
   return new Promise(function(resolve,reject) {
-      console.log(identity);
-      console.log(typeof identity);
-      RecipeModel.findOne({ident:identity},function(err,info){
+      RecipeModel.findOne({ident:ident},function(err,info){
           if (err) {
               reject(err);
           }
@@ -137,18 +135,50 @@ function findRecipe(identity){
 }
 
 let retRecipe = new Recipe();
-router.post("/getRecipe",function(req,res){
-      console.log(req.body.ident);
-      console.log(typeof req.body.ident);
-      var Prom2 = findRecipe(req.body.ident);
+router.post("/getRecipeById",function(req,res){
+      var Prom2 = findRecipeById(req.body.ident);
       Prom2.then(
     	  	function(result) {
-              retRecipe = result._doc;
+              retRecipe = result.toJSON();
               if(retRecipe == null)
                   res.json({retVal:null});
               retRecipe.image = '/public/images/' + retRecipe.image;
               console.log(retRecipe);
               res.json(retRecipe);
+    	    },
+    	    function(err) {
+      	      console.log("error");
+              res.json({retVal:null});
+    	    }
+  	  );
+});
+
+
+function findRecipeByUser(user){
+  return new Promise(function(resolve,reject) {
+      RecipeModel.find({username:user},function(err,info){
+          if (err) {
+              reject(err);
+          }
+          else {
+              resolve(info);
+          }
+      });
+   });
+}
+
+let retRecipeObj = [];
+router.post("/getRecipeByUser",function(req,res){
+      var Prom3 = findRecipeByUser(req.body.user);
+      Prom3.then(
+    	  	function(result) {
+              for(var i=0;i<result.length;i++){
+                  retRecipeObj[i] = result[i].toJSON();
+                  if(retRecipeObj[i] == null)
+                      res.json({retVal:null});
+                  retRecipeObj[i].image = '/public/images/' + result[i].toJSON().image;
+              }
+              res.json(retRecipeObj);
     	    },
     	    function(err) {
       	      console.log("error");

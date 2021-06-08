@@ -91,7 +91,6 @@
             }
 
             $(document).ready(function(){
-
               $.post("/updateRecipePage",null, function(data){
                   $("#title").text(data.dish);
                   $("#ingredients").text(data.ingredients);

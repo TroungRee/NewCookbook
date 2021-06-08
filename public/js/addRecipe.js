@@ -1,6 +1,5 @@
 
 function createClicked(){
-
     $.ajax({
       url: "/createRecipe",
       type: "POST",
