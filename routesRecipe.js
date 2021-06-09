@@ -121,11 +121,11 @@ router.post("/updateRecipePage",function(req,res){
 });
 
 
-function findRecipe(identity){
+function findRecipeById(ident){
   return new Promise(function(resolve,reject) {
-      console.log(identity);
-      console.log(typeof identity);
-      RecipeModel.findOne({ident:identity},function(err,info){
+      console.log(ident);
+      console.log(typeof ident);
+      RecipeModel.findOne({ident:ident},function(err,info){
           if (err) {
               reject(err);
           }
@@ -137,17 +137,14 @@ function findRecipe(identity){
 }
 
 let retRecipe = new Recipe();
-router.post("/getRecipe",function(req,res){
-      console.log(req.body.ident);
-      console.log(typeof req.body.ident);
-      var Prom2 = findRecipe(req.body.ident);
+router.post("/getRecipeById",function(req,res){
+      var Prom2 = findRecipeById(req.body.ident);
       Prom2.then(
     	  	function(result) {
-              retRecipe = result._doc;
+              retRecipe = result;
               if(retRecipe == null)
                   res.json({retVal:null});
               retRecipe.image = '/public/images/' + retRecipe.image;
-              console.log(retRecipe);
               res.json(retRecipe);
     	    },
     	    function(err) {
@@ -157,6 +154,44 @@ router.post("/getRecipe",function(req,res){
   	  );
 });
 
+
+
+function findRecipeByUser(user){
+  return new Promise(function(resolve,reject) {
+      console.log(user);
+      RecipeModel.find({username:user},function(err,info){
+          if (err) {
+              reject(err);
+          }
+          else {
+              resolve(info);
+          }
+      });
+   });
+}
+
+let returnArray = [];
+router.post("/getRecipeByUser",function(req,res){
+      var Prom3 = findRecipeByUser(req.body.username);
+      Prom3.then(
+    	  	function(result) {
+              console.log(result);
+              returnArray = result;
+
+              for(let i=0;i<returnArray.length;i++) {
+                  if(returnArray[i] == null)
+                      res.json({retVal:null});
+                  returnArray[i].image = '/public/images/' + returnArray[i].image;
+              }
+
+              res.json(returnArray);
+    	    },
+    	    function(err) {
+      	      console.log("error");
+              res.json({retVal:null});
+    	    }
+  	  );
+});
 
 router.post('/fileupload', function(req, res){
     var form = new formidable.IncomingForm();

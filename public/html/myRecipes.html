@@ -71,7 +71,7 @@
           </div></a>
         </div>
 
-        <button type="button" name="button" onclick="printRecipe()">CLICK ME</button>
+        <button type="button" name="button" onclick="printRecipeByUser()">CLICK ME</button>
 
       <script type="text/javascript">
             // Script to open and close sidebar
@@ -82,24 +82,10 @@
             function closeMenu() {
               $("#mySidebar").css("display","none");
             }
-
-            $(document).ready(function(){
-
-            });
-
-            function showRecipe(dishName){
-                $.post("/updateClientRecipe",{dish:dishName},null);
-            }
-
-
-            function printRecipe(){
-                var test = {};
-                $.post("/getRecipe",{ident:1},function(data){
-                  console.log(data);
-                });
-            }
-
       </script>
+
+      <script src="../js/myRecipes.js"></script>
+
 
   </body>
 </html>
