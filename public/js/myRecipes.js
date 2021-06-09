@@ -1,5 +1,7 @@
-function showRecipe(dishName){
-    $.post("/updateClientRecipe",{dish:dishName},null);
+function showRecipe(dishIdent){
+    $.post("/getRecipeById",{ident:dishIdent},function(data){
+        console.log(data);
+    });
 }
 
 
@@ -28,7 +30,7 @@ $(document).ready(function(){
             function(result){
                 for(let i=0;i<userRecipes.length;i++){
                     $("#title"+i).text(userRecipes[i].dish);
-                    $("#link"+i).attr("onclick","showRecipe('"+userRecipes[i].dish+"')");
+                    $("#link"+i).attr("onclick","showRecipe('"+userRecipes[i].ident+"')");
                     $("#link"+i).attr("href","/show");
 
                     if(i==0){

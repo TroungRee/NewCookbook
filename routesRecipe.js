@@ -116,10 +116,6 @@ router.post('/createRecipe', function(req, res){
 		res.json({retVal:null});
 });
 
-router.post("/updateRecipePage",function(req,res){
-      res.json(retRecipe);
-});
-
 
 function findRecipeById(ident){
   return new Promise(function(resolve,reject) {
@@ -136,16 +132,14 @@ function findRecipeById(ident){
    });
 }
 
-let retRecipe = new Recipe();
 router.post("/getRecipeById",function(req,res){
       var Prom2 = findRecipeById(req.body.ident);
       Prom2.then(
     	  	function(result) {
-              retRecipe = result;
-              if(retRecipe == null)
+              if(result == null)
                   res.json({retVal:null});
-              retRecipe.image = '/public/images/' + retRecipe.image;
-              res.json(retRecipe);
+              result.image = '/public/images/' + retRecipe.image;
+              res.json(result);
     	    },
     	    function(err) {
       	      console.log("error");
@@ -170,21 +164,17 @@ function findRecipeByUser(user){
    });
 }
 
-let returnArray = [];
+
 router.post("/getRecipeByUser",function(req,res){
       var Prom3 = findRecipeByUser(req.body.username);
       Prom3.then(
     	  	function(result) {
-              console.log(result);
-              returnArray = result;
-
-              for(let i=0;i<returnArray.length;i++) {
-                  if(returnArray[i] == null)
+              for(let i=0;i<result.length;i++) {
+                  if(result[i] == null)
                       res.json({retVal:null});
-                  returnArray[i].image = '/public/images/' + returnArray[i].image;
+                  result[i].image = '/public/images/' + result[i].image;
               }
-
-              res.json(returnArray);
+              res.json(result);
     	    },
     	    function(err) {
       	      console.log("error");
