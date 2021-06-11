@@ -132,14 +132,14 @@ function findRecipeById(ident){
    });
 }
 
-router.post("/getRecipeById",function(req,res){
+router.post("/getRecipeByIdAndUpdate",function(req,res){
       var Prom2 = findRecipeById(req.body.ident);
       Prom2.then(
     	  	function(result) {
               if(result == null)
                   res.json({retVal:null});
               result.image = '/public/images/' + retRecipe.image;
-              res.json(result);
+              $.post
     	    },
     	    function(err) {
       	      console.log("error");

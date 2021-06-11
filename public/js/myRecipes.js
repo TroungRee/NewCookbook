@@ -1,14 +1,7 @@
+
+
 function showRecipe(dishIdent){
-    $.post("/getRecipeById",{ident:dishIdent},function(data){
-        console.log(data);
-    });
-}
-
-
-function printRecipeById(){
-    $.post("/getRecipeById",{ident:1},function(data){
-      console.log(data);
-    });
+    $.post("/getRecipeByIdAndUpdate",{ident:dishIdent},null);
 }
 
 var userRecipes = [];
