@@ -18,8 +18,6 @@ var Promise = require('promise');
 let router = express.Router();
 
 
-
-
 router.use(function(req, res, next) {
   res.locals.currentUserjy = req.user;
   res.locals.errors = req.flash("error");
@@ -42,7 +40,6 @@ function initIdentRecipe(){
 	return new Promise(function(resolve,reject) {
 		if (identRecipe == 0) {
 			RecipeModel.find({},function(err,user) {
-				console.log("RecipeModel.find()");
 				if (err) {
 					reject(err);
 				}
@@ -53,14 +50,12 @@ function initIdentRecipe(){
 						}
 					}
 					identRecipe++;
-					console.log("identRecipe = " + identRecipe);
 					resolve(identRecipe);
 				}
 			});
 		}
 		else {
 			identRecipe++;
-			console.log("identRecipe = " + identRecipe);
 			resolve(identRecipe);
 		}
 	});
@@ -77,15 +72,7 @@ router.get('/read', function(req, res){
 
 
 router.post('/createRecipe', function(req, res){
-  console.log("in post createRecipe");
 	if (req.isAuthenticated()) {
-  		console.log(req.user.username);
-  		console.log(req.body.dish);
-  		console.log(req.body.ingredients);
-      console.log(req.body.directions);
-  		console.log(req.body.category);
-  		console.log(req.body.image);
-
   		if (req.body.dish == "" || req.body.ingredients == "" || req.body.directions == "" || req.body.category == "" || req.body.image == "") {
   			res.json({retVal:null});
   			return;
@@ -94,15 +81,12 @@ router.post('/createRecipe', function(req, res){
   	  var Prom1 = initIdentRecipe();
   	  Prom1.then(
     	  	function(result) {
-        			console.log("identRecipe = " + identRecipe);
         		  if (identRecipe == 0) {
             			res.json({retVal:null});
             			return;
         		  }
         		  let obj = new Recipe(identRecipe,req.user.username,req.body.dish,req.body.ingredients,
                                     req.body.directions,req.body.category,req.body.image);
-        		  console.log(obj);
-        		  console.log("will do db.postRecipe");
         		  return(db.postRecipe(obj,res));
     	    },
     	    function(err) {
@@ -148,7 +132,6 @@ router.post("/getRecipeById",function(req,res){
 
 function findRecipeByUser(user){
   return new Promise(function(resolve,reject) {
-      console.log(user);
       RecipeModel.find({username:user},function(err,info){
           if (err) {
               reject(err);
@@ -169,6 +152,36 @@ router.post("/getRecipeByUser",function(req,res){
                   if(result[i] == null)
                       res.json({retVal:null});
               }
+              res.json(result);
+    	    },
+    	    function(err) {
+      	      console.log("error");
+              res.json({retVal:null});
+    	    }
+  	  );
+});
+
+
+
+function findAllRecipes(){
+  return new Promise(function(resolve,reject) {
+      RecipeModel.find({},function(err,info){
+          if (err) {
+              reject(err);
+          }
+          else {
+              resolve(info);
+          }
+      });
+   });
+}
+
+router.post("/getAllRecipes",function(req,res){
+      var Prom4 = findAllRecipes();
+      Prom4.then(
+    	  	function(result) {
+              if(result == null)
+                  res.json({retVal:null});
               res.json(result);
     	    },
     	    function(err) {

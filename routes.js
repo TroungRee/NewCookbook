@@ -82,19 +82,6 @@ router.get("/login", function(req, res) {
   	res.sendFile(thePath);
 });
 
-router.get("/session", function(req, res) {
-    console.log("get session");
-    if (req.isAuthenticated()) {
-  	     let thePath = path.resolve(__dirname,"public/html/session.html");
-  	     res.sendFile(thePath);
-    }
-    else {
-        let thePath = path.resolve(__dirname,"public/html/login.html");
-        res.sendFile(thePath);
-    }
-});
-
-
 var ident = 0;
 function initIdent(){
   if (ident == 0) {
@@ -120,8 +107,6 @@ router.get("/logout", function(req, res) {
         res.redirect("/failroot");
     }
 });
-
-var recipeInfo = {};
 
 
 router.post("/signup", function(req, res, next) {

@@ -1,11 +1,10 @@
 
 
-var userRecipes = [];
-function setUserRecipes(){
+
+function getUserRecipes(){
   return new Promise(function(resolve,reject) {
-      $.post("/getRecipeByUser",{username:"bob"},function(data){
-          userRecipes = data;
-          resolve();
+      $.post("/getRecipeByUser",null,function(data){
+          resolve(data);
       });
    });
 }
@@ -13,14 +12,17 @@ function setUserRecipes(){
 
 
 $(document).ready(function(){
-    var Prom1 = setUserRecipes();
+    var Prom1 = getUserRecipes();
     Prom1.then(
         function(result){
-            for(let i=0;i<userRecipes.length;i++){
+            if(result.length != 0){
+              $("#emptyScreen").css("display","none");
+            }
+            for(let i=0;i<result.length;i++){
                 $("#recipe"+i).css("display","block");
-                $("#title"+i).text(userRecipes[i].dish);
-                $("#link"+i).attr("href","/show?dish="+userRecipes[i].ident);
-                $("#image"+i).attr("src", userRecipes[i].image);
+                $("#title"+i).text(result[i].dish);
+                $("#link"+i).attr("href","/show?dish="+result[i].ident);
+                $("#image"+i).attr("src", result[i].image);
             }
         }
     );
