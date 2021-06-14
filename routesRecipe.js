@@ -119,11 +119,6 @@ router.post('/createRecipe', function(req, res){
 
 function findRecipeById(ident){
   return new Promise(function(resolve,reject) {
-<<<<<<< HEAD
-=======
-      console.log(ident);
-      console.log(typeof ident);
->>>>>>> 8c35ab028c0ac381880e9c53e757df4b51ece18f
       RecipeModel.findOne({ident:ident},function(err,info){
           if (err) {
               reject(err);
@@ -135,24 +130,13 @@ function findRecipeById(ident){
    });
 }
 
-<<<<<<< HEAD
-let retRecipe = new Recipe();
 router.post("/getRecipeById",function(req,res){
       var Prom2 = findRecipeById(req.body.ident);
       Prom2.then(
     	  	function(result) {
-              retRecipe = result.toJSON();
-              if(retRecipe == null)
-=======
-router.post("/getRecipeByIdAndUpdate",function(req,res){
-      var Prom2 = findRecipeById(req.body.ident);
-      Prom2.then(
-    	  	function(result) {
               if(result == null)
->>>>>>> 8c35ab028c0ac381880e9c53e757df4b51ece18f
                   res.json({retVal:null});
-              result.image = '/public/images/' + retRecipe.image;
-              $.post
+              res.json(result);
     	    },
     	    function(err) {
       	      console.log("error");
@@ -162,15 +146,10 @@ router.post("/getRecipeByIdAndUpdate",function(req,res){
 });
 
 
-<<<<<<< HEAD
-function findRecipeByUser(user){
-  return new Promise(function(resolve,reject) {
-=======
 
 function findRecipeByUser(user){
   return new Promise(function(resolve,reject) {
       console.log(user);
->>>>>>> 8c35ab028c0ac381880e9c53e757df4b51ece18f
       RecipeModel.find({username:user},function(err,info){
           if (err) {
               reject(err);
@@ -182,20 +161,6 @@ function findRecipeByUser(user){
    });
 }
 
-<<<<<<< HEAD
-let retRecipeObj = [];
-router.post("/getRecipeByUser",function(req,res){
-      var Prom3 = findRecipeByUser(req.body.user);
-      Prom3.then(
-    	  	function(result) {
-              for(var i=0;i<result.length;i++){
-                  retRecipeObj[i] = result[i].toJSON();
-                  if(retRecipeObj[i] == null)
-                      res.json({retVal:null});
-                  retRecipeObj[i].image = '/public/images/' + result[i].toJSON().image;
-              }
-              res.json(retRecipeObj);
-=======
 
 router.post("/getRecipeByUser",function(req,res){
       var Prom3 = findRecipeByUser(req.body.username);
@@ -204,10 +169,8 @@ router.post("/getRecipeByUser",function(req,res){
               for(let i=0;i<result.length;i++) {
                   if(result[i] == null)
                       res.json({retVal:null});
-                  result[i].image = '/public/images/' + result[i].image;
               }
               res.json(result);
->>>>>>> 8c35ab028c0ac381880e9c53e757df4b51ece18f
     	    },
     	    function(err) {
       	      console.log("error");
@@ -216,10 +179,6 @@ router.post("/getRecipeByUser",function(req,res){
   	  );
 });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8c35ab028c0ac381880e9c53e757df4b51ece18f
 router.post('/fileupload', function(req, res){
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {

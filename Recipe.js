@@ -6,7 +6,7 @@ let Recipe = function(ident,username,dish,ingredients,directions,category,image)
   	this.ingredients = ingredients;
   	this.directions = directions;
   	this.category = category;
-    this.image = image;
+    this.image = '/public/images/' + image;
 }
 
 module.exports = Recipe;

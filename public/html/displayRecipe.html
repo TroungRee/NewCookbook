@@ -91,19 +91,18 @@
             }
 
             $(document).ready(function(){
-<<<<<<< HEAD
-=======
+              //var querystring = window.location.querystring;
+              let searchParams = new URLSearchParams(window.location.search)
+              console.log(searchParams.get("dish"));
 
-/*
->>>>>>> 8c35ab028c0ac381880e9c53e757df4b51ece18f
-              $.post("/updateRecipePage",null, function(data){
+              $.post("/getRecipeById",{ident:searchParams.get("dish")}, function(data){
                   $("#title").text(data.dish);
                   $("#ingredients").text(data.ingredients);
                   $("#directions").text(data.directions);
                   $("#category").text(data.category);
-                  image.src = data.image;
+                  $("#image").attr("src", data.image);
               });
-              */
+
             });
 
       </script>
