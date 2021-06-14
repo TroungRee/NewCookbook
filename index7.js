@@ -16,7 +16,7 @@ mongoose.connect("mongodb://localhost:27017/group7");   //27017 seems to be the 
 
 setUpPassport();
 
-app.set("port", process.env.PORT || 3000);
+app.set("port", 4007);
 
 app.use('/', express.static('./'));
 app.use('/js', express.static('./public/js'));
