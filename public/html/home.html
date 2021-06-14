@@ -19,44 +19,123 @@
   <a href="/home" onclick="closeMenu()" class="w3-bar-item w3-button">Home</a>
   <a href="/myRecipes" onclick="closeMenu()" class="w3-bar-item w3-button">My Recipes</a>
   <a href="/add" onclick="closeMenu()" class="w3-bar-item w3-button">Add Recipe</a>
-  <a href="/signup" onclick="closeMenu()" class="w3-bar-item w3-button">Sign Up</a>
-  <a href="/login" onclick="closeMenu()" class="w3-bar-item w3-button">Login</a>
+  <a href="/login" onclick="closeMenu()" class="w3-bar-item w3-button">Log Out</a>
 </nav>
 
 <!-- Top menu -->
 <div class="w3-top">
   <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
     <div class="w3-button w3-padding-16 w3-left" onclick="openMenu()">☰</div>
-    <div class="w3-right"> <img src="/public/images/cookbooklogo.png" style="width:auto;height:68px"> </div>
+    <div class="w3-right"> <img src="/public/images/cookbooklogo.png" style="width:auto;height:68px"></div>
     <div class="w3-center w3-padding-16">Book of the Cooking</div>
   </div>
 </div>
 
-<!-- !PAGE CONTENT! -->
-<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
 
-  <!-- First Photo Grid-->
-  <div class="w3-row-padding w3-padding-16 w3-center" id="food" >
-    <a href="/show" onclick="showRecipe('Tuna Casserole')"><div class="w3-quarter" id="home1">
-      <img src="public/images/Tuna Casserole.jpg" alt="Tuna Casserole" style="width:100%;border:30px solid #fff">
-      <h3>Tuna Casserole</h3>
-    </div></a>
-    <a href="/show" onclick="showRecipe('Easy Bake Fish')"><div class="w3-quarter" id="home2">
-      <img src="public/images/Easy Bake Fish.jpg" alt="Fish" style="width:100%; border:30px solid #fff">
-      <h3>Easy Bake Fish</h3>
-    </div></a>
-    <a href="/show" onclick="showRecipe('Crispy Baked Chicken')"><div class="w3-quarter" id="home3">
-      <img src="public/images/Crispy Baked Chicken.jpg" alt="Chicken" style="width:100%; border:30px solid #fff">
-      <h3>Crispy Baked Chicken</h3>
-    </div></a>
-    <a href="/show" onclick="showRecipe('Peanut Butter Banana Smoothie')"><div class="w3-quarter" id="home4">
-      <img src="public/images/Peanut Butter Banana Smoothie.jpg" alt="Peanut Butter Banana Smoothie" style="width:100%; border:30px solid #fff">
-      <h3>Peanut Butter Banana Smoothie</h3>
-    </div></a>
-  </div>
+  <!-- !PAGE CONTENT! -->
+  <div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
 
-<script src="../js/ourRecipes.js"></script>
+    <!-- First Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center">
+      <a href="" id="link0"><div class="w3-quarter" style="display:none;" id="recipe0">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image0">
+        <h3 id="title0">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link1"><div class="w3-quarter" style="display:none;" id="recipe1">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image1">
+        <h3 id="title1">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link2"><div class="w3-quarter" style="display:none;" id="recipe2">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image2">
+        <h3 id="title2">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link3"><div class="w3-quarter" style="display:none;" id="recipe3">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image3">
+        <h3 id="title3">Add Your Recipe</h3>
+      </div></a>
+    </div>
 
+    <!-- Second Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center">
+      <a href="" id="link4"><div class="w3-quarter" style="display:none;" id="recipe4">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image4">
+        <h3 id="title4">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link5"><div class="w3-quarter" style="display:none;" id="recipe5">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image5">
+        <h3 id="title5">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link6"><div class="w3-quarter" style="display:none;" id="recipe6">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image6">
+        <h3 id="title6">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link7"><div class="w3-quarter" style="display:none;" id="recipe7">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image7">
+        <h3 id="title7">Add Your Recipe</h3>
+      </div></a>
+    </div>
+
+
+    <!-- Third Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center">
+      <a href="" id="link8"><div class="w3-quarter" style="display:none;" id="recipe8">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image8">
+        <h3 id="title8">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link9"><div class="w3-quarter" style="display:none;" id="recipe9">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image9">
+        <h3 id="title9">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link10"><div class="w3-quarter" style="display:none;" id="recipe10">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image10">
+        <h3 id="title10">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link11"><div class="w3-quarter" style="display:none;" id="recipe11">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image11">
+        <h3 id="title11">Add Your Recipe</h3>
+      </div></a>
+    </div>
+
+    <!-- Fourth Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center">
+      <a href="" id="link12"><div class="w3-quarter" style="display:none;" id="recipe12">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image12">
+        <h3 id="title12">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link13"><div class="w3-quarter" style="display:none;" id="recipe13">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image13">
+        <h3 id="title13">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link14"><div class="w3-quarter" style="display:none;" id="recipe14">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image14">
+        <h3 id="title14">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link15"><div class="w3-quarter" style="display:none;" id="recipe15">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image15">
+        <h3 id="title15">Add Your Recipe</h3>
+      </div></a>
+    </div>
+
+
+    <!-- Fifth Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center">
+      <a href="" id="link16"><div class="w3-quarter" style="display:none;" id="recipe16">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image16">
+        <h3 id="title16">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link17"><div class="w3-quarter" style="display:none;" id="recipe17">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image17">
+        <h3 id="title17">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link18"><div class="w3-quarter" style="display:none;" id="recipe18">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image18">
+        <h3 id="title18">Add Your Recipe</h3>
+      </div></a>
+      <a href="" id="link19"><div class="w3-quarter" style="display:none;" id="recipe19">
+        <img src="" alt="none" style="width:100%;border:30px solid #fff" id="image19">
+        <h3 id="title19">Add Your Recipe</h3>
+      </div></a>
+    </div>
 
 <script type="text/javascript">
     // Script to open and close sidebar
@@ -66,10 +145,6 @@
 
     function closeMenu() {
       $("#mySidebar").css("display","none");
-    }
-
-    function showRecipe(dishName){
-        $.post("/updateServerRecipe",{dish:dishName},null);
     }
 
 </script>

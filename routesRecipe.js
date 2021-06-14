@@ -86,12 +86,11 @@ router.post('/createRecipe', function(req, res){
   		console.log(req.body.category);
   		console.log(req.body.image);
 
-  		if (req.body.dish == "") {
+  		if (req.body.dish == "" || req.body.ingredients == "" || req.body.directions == "" || req.body.category == "" || req.body.image == "") {
   			res.json({retVal:null});
   			return;
   		}
 
-	    console.log(req.user.username);
   	  var Prom1 = initIdentRecipe();
   	  Prom1.then(
     	  	function(result) {
@@ -163,7 +162,7 @@ function findRecipeByUser(user){
 
 
 router.post("/getRecipeByUser",function(req,res){
-      var Prom3 = findRecipeByUser(req.body.username);
+      var Prom3 = findRecipeByUser(req.user.username);
       Prom3.then(
     	  	function(result) {
               for(let i=0;i<result.length;i++) {
