@@ -13,6 +13,16 @@ var routesRecipe = require("./routesRecipe");    //added
 
 var app = express();
 mongoose.connect("mongodb://localhost:27017/recipe");   //27017 seems to be the port number used by mongod
+//BEFORE TURN IN CHANGE recipe to group7
+/*                        CHANGE CHANGE CHANGE
+                          CHANGE CHANGE CHANGE
+                          CHANGE CHANGE CHANGE
+                          CHANGE CHANGE CHANGE
+                          CHANGE CHANGE CHANGE
+                          CHANGE CHANGE CHANGE
+                          CHANGE CHANGE CHANGE
+                          CHANGE CHANGE CHANGE
+*/
 setUpPassport();
 
 app.set("port", process.env.PORT || 3000);
