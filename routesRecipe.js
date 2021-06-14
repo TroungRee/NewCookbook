@@ -200,6 +200,8 @@ router.post('/fileupload', function(req, res){
 		        if (err) throw err;
         });
     });
+    res.redirect("/myRecipes");
+    //res.sendFile(__dirname + "/public/html/myRecipes.html");
 });
 
 module.exports = router;

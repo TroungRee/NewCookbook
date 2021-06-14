@@ -13,5 +13,8 @@ function createClicked(){
 
 
 $(document).ready(function(){
-  $("#addRecipe").click(createClicked);
+  $("#imageForm").submit(function(event) {
+    createClicked();
+  });
+  //$("#imageForm").click(createClicked);
 });

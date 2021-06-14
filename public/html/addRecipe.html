@@ -2,7 +2,7 @@
 <!--   -->
 <html>
   <head>
-    <title>Ajax</title>
+    <title>My Cookbook</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" text="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
@@ -10,6 +10,7 @@
         body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
         .w3-bar-block .w3-bar-item {padding:20px}
     </style>
+    <link rel="icon" type="image/png" href="/public/images/cookbooklogo.png">
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
   </head>
 
@@ -60,19 +61,18 @@
           <br>
           <br>
 
+          <h3>Image</h3>
           <form action="fileupload" method="post" enctype="multipart/form-data" id="imageForm">
               <input id="imageStuff" type="file" accept="image/*" name="filetoupload">
-              <input type="submit" name="uploadImage" value="Upload Image">
-          </form>
-
-        <br>
-        <input id="addRecipe" type="button" value="Add Recipe" style="font-size:30px" class="button" onclick="location.href='/myRecipes'">
-
+              <br> <br>
+              <input id="addRecipe" type="submit" name="uploadImage" value="Upload Image"
+                      style="font-size:30px" class="button" onclick="location.href='/myRecipes'">
+        </form>
           <style>
               .button {
                 background-color: #0000FF;
-              height: 100px;
-              width: 200px;
+                height: 100px;
+                width: 200px;
               }
           </style>
           <style>
@@ -89,7 +89,7 @@
 
 
 
-    <script src="../js/uploadFile.js"></script>
+
     <script src="../js/addRecipe.js"></script>
 
     <script type="text/javascript">
